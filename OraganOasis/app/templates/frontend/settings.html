@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis - Settings</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <div class="container small-form">
+    <h2>Settings</h2>
+    <div class="card">
+      <h3>Theme</h3>
+      <button id="themeToggleSettings" class="btn">Toggle Light/Dark</button>
+    </div>
+    <div class="card">
+      <h3>Edit Hospital Info</h3>
+      <form id="editHospitalForm" class="form">
+        <label>Email<input name="email" id="editEmail"></label>
+        <label>Contact<input name="contact" id="editContact"></label>
+        <label>Location<input name="location" id="editLocation"></label>
+        <div class="form-actions"><button class="btn" type="button" onclick="saveHospitalInfo()">Save</button></div>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Change Password</h3>
+      <form id="changePassForm" class="form">
+        <label>Old Password<input name="oldpass" type="password"></label>
+        <label>New Password<input name="newpass" type="password"></label>
+        <label>Confirm Password<input name="newpass2" type="password"></label>
+        <div class="form-actions"><button class="btn" type="button" onclick="changePassword()">Change</button></div>
+      </form>
+    </div>
+    <div class="form-actions"><button class="btn outline" onclick="logout()">Logout</button></div>
+  </div>
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

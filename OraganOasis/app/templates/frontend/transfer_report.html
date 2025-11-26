@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis - Transfer & Report</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <div class="container grid-2">
+    <div class="card">
+      <h3>Transfer-Out (Donor Hospital)</h3>
+      <form id="transferOutForm" class="form">
+        <label>Organ Type<input name="organ_type"></label>
+        <label>Vehicle Type<input name="vehicle_type"></label>
+        <label>Vehicle Number<input name="vehicle_no"></label>
+        <label>Dispatch Time<input name="dispatch_time" type="datetime-local"></label>
+        <label>Sender Name<input name="sender_name"></label>
+        <label>Signature<input name="sender_signature" placeholder="Type name as signature"></label>
+        <div class="form-actions"><button class="btn" type="button" onclick="saveTransferOut()">Save</button></div>
+      </form>
+    </div>
+    <div class="card">
+      <h3>Transfer-In (Receiver Hospital)</h3>
+      <form id="transferInForm" class="form">
+        <label>Arrival Time<input name="arrival_time" type="datetime-local"></label>
+        <label>Receiver Name<input name="receiver_name"></label>
+        <label>Signature<input name="receiver_signature" placeholder="Type name as signature"></label>
+        <div class="form-actions"><button class="btn" type="button" onclick="saveTransferIn()">Save & Generate Report</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <div id="transferReport"></div>
+  </div>
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

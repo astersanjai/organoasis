@@ -1,0 +1,206 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>OrganOasis Landing</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+    {% block stylesheet %}{% endblock %}
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3B82F6",
+                        secondary: "#60A5FA",
+                        accent: "#10B981",
+                        "background-light": "#F8FAFC",
+                        "background-dark": "#0F172A",
+                        "card-light": "#FFFFFF",
+                        "card-dark": "#1E293B",
+                        "text-light": "#1E293B",
+                        "text-dark": "#E2E8F0",
+                        "text-muted-light": "#64748B",
+                        "text-muted-dark": "#94A3B8",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3B82F6;
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="font-sans bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark antialiased">
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:block fixed top-0 left-0 right-0 bg-white/90 dark:bg-card-dark/90 backdrop-blur-sm shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-8">
+                    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                        OrganOasis
+                    </h1>
+                    <div class="flex space-x-6">
+                        <a href="#" class="nav-link font-medium text-text-light dark:text-text-dark hover:text-primary transition-colors">Home</a>
+                        <a href="#" class="nav-link font-medium text-text-light dark:text-text-dark hover:text-primary transition-colors">About</a>
+                        <a href="#" class="nav-link font-medium text-text-light dark:text-text-dark hover:text-primary transition-colors">Contact</a>
+                        <a href="{% url 'dashboard' %}" class="nav-link font-medium text-text-light dark:text-text-dark hover:text-primary transition-colors flex items-center">
+                            <span class="material-icons-outlined mr-1 text-sm">dashboard</span>
+                            Dashboard
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'login' %}" class="px-4 py-2 text-primary font-medium hover:bg-blue-50 dark:hover:bg-slate-800 rounded-lg transition-colors">Login</a>
+                    <a href="{% url 'signup' %}" class="px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-blue-600 transition-colors">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col min-h-screen p-6 sm:p-8 md:p-12 lg:p-16 md:max-w-7xl mx-auto mt-16 md:mt-24">
+        <header class="flex-shrink-0 text-center py-8">
+            <h1 class="text-4xl sm:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                OrganOasis
+            </h1>
+            <p class="mt-2 text-base sm:text-lg font-medium text-text-muted-light dark:text-text-muted-dark tracking-wide">
+                Donor Meets Innovation
+            </p>
+        </header>
+<main class="flex-grow flex flex-col justify-center items-center text-center px-4">
+            <!-- Stats Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl mb-12">
+                <div class="bg-blue-600 dark:bg-blue-800 text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform">
+                    <span class="material-icons-outlined text-white text-5xl mb-2">check_circle</span>
+                    <p class="text-4xl font-extrabold leading-tight">120+</p>
+                    <p class="text-xl font-medium mt-1">Organs Matched</p>
+                    <p class="text-blue-100 dark:text-blue-200 text-sm mt-3 opacity-80">
+                        Reliability and precision in every connection.
+                    </p>
+                </div>
+                <div class="bg-emerald-600 dark:bg-emerald-800 text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform">
+                    <span class="material-icons-outlined text-white text-5xl mb-2">local_hospital</span>
+                    <p class="text-4xl font-extrabold leading-tight">50+</p>
+                    <p class="text-xl font-medium mt-1">Partner Hospitals</p>
+                    <p class="text-emerald-100 dark:text-emerald-200 text-sm mt-3 opacity-80">
+                        Trusted healthcare partnerships.
+                    </p>
+                </div>
+                <div class="bg-indigo-600 dark:bg-indigo-800 text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-transform md:col-span-2 lg:col-span-1">
+                    <span class="material-icons-outlined text-white text-5xl mb-2">schedule</span>
+                    <p class="text-4xl font-extrabold leading-tight">24/7</p>
+                    <p class="text-xl font-medium mt-1">Support Available</p>
+                    <p class="text-indigo-100 dark:text-indigo-200 text-sm mt-3 opacity-80">
+                        Round-the-clock assistance.
+                    </p>
+                </div>
+            </div>
+<!-- How it Works Section -->
+            <div class="grid md:grid-cols-2 gap-8 w-full max-w-6xl mb-12">
+                <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-md p-8 text-left transform hover:shadow-xl transition-shadow">
+                    <h2 class="text-2xl font-semibold mb-6 text-text-light dark:text-text-dark">
+                        How OrganOasis Works:
+                    </h2>
+                    <ul class="space-y-4 text-text-muted-light dark:text-text-muted-dark text-base">
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">data_usage</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Securely register hospital and patient data with validated protocols.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">sync_alt</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Our AI-driven engine intelligently matches donors to recipients based on critical criteria.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">notifications_active</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Receive instant, secure notifications for potential matches and next steps.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">verified_user</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Ensure compliance and audit trails for every step of the process.
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-card-light dark:bg-card-dark rounded-xl shadow-md p-8 text-left transform hover:shadow-xl transition-shadow">
+                    <h2 class="text-2xl font-semibold mb-6 text-text-light dark:text-text-dark">
+                        Why Choose OrganOasis:
+                    </h2>
+                    <ul class="space-y-4 text-text-muted-light dark:text-text-muted-dark text-base">
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">security</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Advanced security protocols protecting sensitive medical data.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">speed</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                Real-time matching system for immediate response.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">psychology</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                AI-powered matching algorithms for optimal compatibility.
+                            </span>
+                        </li>
+                        <li class="flex items-start group">
+                            <span class="material-icons-outlined text-primary text-xl mr-3 mt-0.5 group-hover:scale-110 transition-transform">support_agent</span>
+                            <span class="group-hover:text-primary transition-colors">
+                                24/7 dedicated support team for hospitals and medical staff.
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+<!-- CTA Section -->
+            <div class="grid md:grid-cols-2 gap-4 w-full max-w-4xl">
+                <a class="group bg-primary text-white font-semibold py-4 px-6 rounded-xl shadow-md hover:bg-blue-700 transition-all hover:shadow-lg transform hover:-translate-y-0.5" href="{% url 'login' %}">
+                    <div class="flex items-center justify-center">
+                        <span class="material-icons-outlined mr-2 group-hover:rotate-12 transition-transform">login</span>
+                        Hospital Login
+                    </div>
+                </a>
+                <a class="group bg-blue-100 dark:bg-slate-700 text-primary dark:text-blue-300 font-semibold py-4 px-6 rounded-xl hover:bg-blue-200 dark:hover:bg-slate-600 transition-all hover:shadow-lg transform hover:-translate-y-0.5" href="{% url 'signup' %}">
+                    <div class="flex items-center justify-center">
+                        <span class="material-icons-outlined mr-2 group-hover:rotate-12 transition-transform">app_registration</span>
+                        Hospital Signup
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

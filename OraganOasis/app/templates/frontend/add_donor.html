@@ -1,0 +1,102 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis - Add Donor</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <div class="container small-form">
+    <h2>Add Donor</h2>
+    <div class="card">
+      <form id="addDonorForm" class="form">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Donor Name / Relation<input name="donor_name" required></label>
+            <div class="help-text">Name of donor or relation to deceased</div>
+          </div>
+          <div class="form-group">
+            <label>Hospital Name<input name="hospital" id="hospitalAuto" readonly></label>
+            <div class="help-text">Auto-filled from your profile</div>
+          </div>
+        </div>
+        
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Patient ID<input name="patient_id" pattern="[A-Z0-9-]+" required></label>
+            <div class="help-text">Hospital's patient identifier</div>
+          </div>
+          <div class="form-group">
+            <label>Blood Group
+              <select name="blood" required>
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Organ Type
+              <select name="organ" required>
+                <option value="">Select Organ</option>
+                <option value="Heart">Heart</option>
+                <option value="Kidney">Kidney</option>
+                <option value="Liver">Liver</option>
+                <option value="Lungs">Lungs</option>
+                <option value="Pancreas">Pancreas</option>
+                <option value="Cornea">Cornea</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>District<input name="district" list="districts" required></label>
+            <datalist id="districts">
+              <option value="Chennai">
+              <option value="Mumbai">
+              <option value="Delhi">
+              <option value="Bangalore">
+              <option value="Kolkata">
+            </datalist>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Contact Number<input name="contact" pattern="[0-9+ -]+" required></label>
+            <div class="help-text">Emergency contact number</div>
+          </div>
+          <div class="form-group">
+            <label>Expiry Time<input name="expiry" type="datetime-local" required></label>
+            <div class="help-text" id="expiryHelp">Time until organ remains viable</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Additional Notes<textarea name="notes" rows="3"></textarea></label>
+          <div class="help-text">Any special requirements or medical notes</div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Add to Availability</button>
+          <button type="button" class="btn outline" onclick="go('/frontend/dashboard.html')">Cancel</button>
+        </div>
+
+        <div id="addDonorMsg" class="message-box"></div>
+      </form>
+    </div>
+    </form>
+  </div>
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

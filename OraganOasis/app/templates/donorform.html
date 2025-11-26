@@ -1,0 +1,442 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Donor Information Form</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#17cf91",
+            "background-light": "#f6f8f7",
+            "background-dark": "#11211c",
+            "accent": "#007BFF",
+            "error": "#D32F2F",
+            "success": "#388E3C",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('donorForm');
+        const successAlert = document.getElementById('successAlert');
+        const donorTypeInputs = document.getElementsByName('donor_type');
+        const recipientRelationField = document.getElementById('recipientRelation');
+        const organCheckboxes = document.querySelectorAll('input[name="organs[]"]');
+        
+        // Handle form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) {
+                // Show loading state
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').innerHTML = `
+                    <span class="material-symbols-outlined animate-spin">progress_activity</span>
+                    Processing...
+                `;
+                
+                // Simulate form submission (replace with actual submission)
+                setTimeout(() => {
+                    showSuccessMessage();
+                    document.getElementById('submitBtn').disabled = false;
+                    document.getElementById('submitBtn').innerHTML = `
+                        <span class="material-symbols-outlined">save</span>
+                        Submit Donor Information
+                    `;
+                }, 2000);
+            }
+        });
+
+        // Handle donor type change
+        donorTypeInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                const isLivingDonor = this.value === 'living';
+                recipientRelationField.style.display = isLivingDonor ? 'block' : 'none';
+                if (!isLivingDonor) {
+                    recipientRelationField.querySelector('input').value = '';
+                }
+            });
+        });
+
+        // Handle file uploads
+        document.querySelectorAll('.upload-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.querySelector('input[type="file"]');
+                input.click();
+            });
+        });
+
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const fileName = this.files[0]?.name;
+                const label = this.closest('.upload-btn').querySelector('.upload-label');
+                if (fileName) {
+                    label.textContent = fileName;
+                }
+            });
+        });
+
+        // Organ selection validation
+        function validateOrganSelection() {
+            const checked = Array.from(organCheckboxes).some(cb => cb.checked);
+            organCheckboxes.forEach(cb => {
+                cb.closest('.organ-checkbox').classList.toggle('border-error', !checked);
+            });
+            return checked;
+        }
+
+        organCheckboxes.forEach(cb => {
+            cb.addEventListener('change', validateOrganSelection);
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('border-error');
+                    field.classList.add('animate-shake');
+                    setTimeout(() => field.classList.remove('animate-shake'), 500);
+                } else {
+                    field.classList.remove('border-error');
+                }
+            });
+
+            if (!validateOrganSelection()) {
+                isValid = false;
+            }
+
+            const consent = document.getElementById('consentCheckbox');
+            if (!consent.checked) {
+                isValid = false;
+                consent.closest('label').classList.add('text-error');
+            } else {
+                consent.closest('label').classList.remove('text-error');
+            }
+
+            return isValid;
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            successAlert.classList.remove('hidden');
+            successAlert.classList.add('animate-slide-up');
+            setTimeout(() => {
+                successAlert.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Handle section navigation
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', function() {
+                if (this.open) {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+</script>
+<style>
+    body {
+      background-image: linear-gradient(to bottom, #E0F7FA, #E8F5E9);
+    }
+    .dark body {
+      background-image: linear-gradient(to bottom, #102a2d, #122915);
+    }
+    
+    .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    
+    .animate-slide-up {
+        animation: slideUp 0.3s ease-out forwards;
+    }
+    
+    @keyframes shake {
+        10%, 90% { transform: translate3d(-1px, 0, 0); }
+        20%, 80% { transform: translate3d(2px, 0, 0); }
+        30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+        40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+    
+    @keyframes slideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden text-[#333333] dark:text-gray-200">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm p-4 pb-2 justify-between">
+<a href="{% url 'dashboard' %}" class="flex size-12 shrink-0 items-center justify-center cursor-pointer hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200">arrow_back</span>
+</a>
+<h2 class="text-[#111815] dark:text-gray-200 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Donor Information</h2>
+<div class="size-12 shrink-0"></div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 p-4">
+<form method="POST" action="{% url 'donorform' %}" enctype="multipart/form-data" id="donorForm" class="flex flex-col gap-3">
+{% csrf_token %}
+<!-- Accordion Section 1: Donor Information -->
+<details class="flex flex-col rounded-xl bg-white/70 dark:bg-background-dark/70 shadow-sm" open="">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-4">
+<p class="text-[#111815] dark:text-gray-200 text-base font-medium leading-normal">Donor Information</p>
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 flex flex-col gap-4">
+<p class="text-[#757575] dark:text-gray-400 text-sm font-normal leading-normal -mt-2">Please fill in the donor's personal details.</p>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Donor Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter full name" value=""/>
+</label>
+<div class="flex flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Age</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="e.g., 34" type="number" value=""/>
+</label>
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Gender</p>
+<select class="form-select flex w-full min-w-0 flex-1 overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 px-4 text-sm font-normal">
+<option>Select Gender</option>
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+</label>
+</div>
+<div class="flex flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Blood Group</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="e.g., O+" value=""/>
+</label>
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Contact Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter phone number" type="tel" value=""/>
+</label>
+</div>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Address / District / State</p>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 placeholder:text-[#757575] dark:placeholder:text-gray-500 p-4 text-sm font-normal" placeholder="Enter full address" rows="3"></textarea>
+</label>
+<div class="flex flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Identification Type</p>
+<select class="form-select flex w-full min-w-0 flex-1 overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 px-4 text-sm font-normal">
+<option>Aadhaar</option>
+<option>PAN</option>
+<option>Passport</option>
+</select>
+</label>
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">ID Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter ID number" value=""/>
+</label>
+</div>
+<div>
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Upload ID Proof</p>
+<button class="flex items-center justify-center gap-2 w-full rounded-lg border border-dashed border-accent dark:border-accent/70 h-16 text-accent dark:text-accent/80 hover:bg-accent/10 transition-colors">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="text-sm font-medium">Click to upload</span>
+</button>
+</div>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Relationship to Recipient (if living donor)</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="e.g., Sibling, Parent, Spouse" value=""/>
+</label>
+</div>
+</details>
+<!-- Accordion Section 2: Medical Details -->
+<details class="flex flex-col rounded-xl bg-white/70 dark:bg-background-dark/70 shadow-sm">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-4">
+<p class="text-[#111815] dark:text-gray-200 text-base font-medium leading-normal">Medical Details</p>
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal">Donor Type</p>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="form-radio text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" name="donor_type" type="radio"/>
+<span class="text-sm">Living Donor</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="form-radio text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" name="donor_type" type="radio"/>
+<span class="text-sm">Deceased Donor</span>
+</label>
+</div>
+</div>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Medical History Declaration</p>
+<textarea class="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 placeholder:text-[#757575] dark:placeholder:text-gray-500 p-4 text-sm font-normal" placeholder="Declare any significant medical conditions" rows="3"></textarea>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Previous Surgeries (Optional)</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="List any previous surgeries" value=""/>
+</label>
+</div>
+</details>
+<!-- Accordion Section 3: Organ Information -->
+<details class="flex flex-col rounded-xl bg-white/70 dark:bg-background-dark/70 shadow-sm">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-4">
+<p class="text-[#111815] dark:text-gray-200 text-base font-medium leading-normal">Organ Information</p>
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal">Organs Donated</p>
+<div class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Heart</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Liver</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Kidney</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Lungs</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Eyes / Cornea</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-gray-100 dark:bg-gray-700 py-2 px-3 rounded-full">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50" type="checkbox"/>
+<span class="text-sm">Tissue</span>
+</label>
+</div>
+</div>
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Associated Recipient Patient ID</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter recipient's ID" value=""/>
+</label>
+</div>
+</details>
+<!-- Accordion Section 4: Emergency / Consent -->
+<details class="flex flex-col rounded-xl bg-white/70 dark:bg-background-dark/70 shadow-sm mb-20">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-4">
+<p class="text-[#111815] dark:text-gray-200 text-base font-medium leading-normal">Emergency / Consent</p>
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 flex flex-col gap-4">
+<label class="flex flex-col w-full">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Next-of-Kin Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter full name" value=""/>
+</label>
+<div class="flex flex-wrap items-end gap-4">
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Relation</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="e.g., Spouse" value=""/>
+</label>
+<label class="flex flex-col min-w-0 flex-1">
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2">Phone Number</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#333333] dark:text-gray-200 focus:outline-0 focus:ring-2 focus:ring-accent/50 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 h-12 placeholder:text-[#757575] dark:placeholder:text-gray-500 px-4 text-sm font-normal" placeholder="Enter phone number" type="tel" value=""/>
+</label>
+</div>
+<label class="flex items-start gap-3 cursor-pointer mt-2">
+<input class="form-checkbox rounded text-accent focus:ring-accent/50 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800/50 mt-1" type="checkbox"/>
+<span class="text-sm text-[#333333] dark:text-gray-200">I confirm that I have the consent for this organ donation process.</span>
+</label>
+<div>
+<p class="text-[#333333] dark:text-gray-200 text-sm font-medium leading-normal pb-2 mt-2">Upload Consent Form (PDF/Photo)</p>
+<button class="flex items-center justify-center gap-2 w-full rounded-lg border border-dashed border-accent dark:border-accent/70 h-16 text-accent dark:text-accent/80 hover:bg-accent/10 transition-colors">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="text-sm font-medium">Click to upload form</span>
+</button>
+</div>
+</div>
+</details>
+<!-- Accordion Section 5: Hospital Section -->
+<details class="flex flex-col rounded-xl bg-white/70 dark:bg-background-dark/70 shadow-sm">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6 p-4">
+<p class="text-[#111815] dark:text-gray-200 text-base font-medium leading-normal">Hospital Section</p>
+<span class="material-symbols-outlined text-[#111815] dark:text-gray-200 group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="px-4 pb-4 flex flex-col gap-4">
+<p class="text-[#757575] dark:text-gray-400 text-sm font-normal -mt-2">This section is auto-filled for deceased donor entries.</p>
+<label class="flex flex-col w-full">
+<p class="text-[#757575] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Hospital Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 h-12 px-4 text-sm text-[#757575] dark:text-gray-400" readonly="" value="City General Hospital"/>
+</label>
+<label class="flex flex-col w-full">
+<p class="text-[#757575] dark:text-gray-400 text-sm font-medium leading-normal pb-2">Doctor / Coordinator Name</p>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 h-12 px-4 text-sm text-[#757575] dark:text-gray-400" readonly="" value="Dr. Emily Carter"/>
+</label>
+</div>
+</details>
+</div>
+</main>
+<!-- Success Alert -->
+<div class="fixed bottom-24 inset-x-4 z-20 flex items-center gap-3 rounded-xl bg-success p-4 shadow-lg text-white">
+<span class="material-symbols-outlined">check_circle</span>
+<div class="flex-1">
+<h3 class="font-medium">Success</h3>
+<p class="text-sm opacity-90">Donor details saved successfully.</p>
+</div>
+<div class="flex items-center justify-center p-1 rounded-full text-sm font-bold bg-white/20 text-white">Pending Verification</div>
+</div>
+<!-- Success Alert (Hidden by default) -->
+<div id="successAlert" class="fixed bottom-24 inset-x-4 z-20 flex items-center gap-3 rounded-xl bg-success p-4 shadow-lg text-white hidden">
+    <span class="material-symbols-outlined">check_circle</span>
+    <div class="flex-1">
+        <h3 class="font-medium">Success</h3>
+        <p class="text-sm opacity-90">Donor details saved successfully.</p>
+    </div>
+    <div class="flex items-center justify-center p-1 rounded-full text-sm font-bold bg-white/20 text-white">Pending Verification</div>
+</div>
+
+<!-- Sticky Footer with System Actions -->
+<footer class="sticky bottom-0 z-10 bg-white/90 dark:bg-background-dark/90 backdrop-blur-sm p-4 border-t border-gray-200 dark:border-gray-700">
+    <div class="flex flex-col gap-3">
+        <button 
+            type="submit"
+            id="submitBtn"
+            class="flex items-center justify-center gap-2 w-full h-12 px-6 rounded-lg bg-accent text-white text-base font-bold leading-normal shadow-md hover:bg-accent/90 transition-all duration-200 hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-accent/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+            <span class="material-symbols-outlined">save</span>
+            Submit Donor Information
+        </button>
+        <div class="flex items-center justify-center gap-4">
+            <button type="button" onclick="window.location.href='{% url 'dashboard' %}'" class="text-accent dark:text-accent/80 text-sm font-medium hover:text-accent/70 transition-colors">View Donor History / Status</button>
+            <div class="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
+            <button type="button" id="downloadProof" class="text-accent dark:text-accent/80 text-sm font-medium hover:text-accent/70 transition-colors" disabled>Download Proof</button>
+        </div>
+    </div>
+</footer>
+</form> <!-- Close the form tag we opened at the start -->
+</div>
+</div>
+</body></html>

@@ -1,0 +1,108 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis - Dashboard</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <div class="dashboard container">
+    <aside class="sidebar">
+      <div class="brand">Organ Oasis</div>
+      <nav>
+        <a href="/frontend/dashboard.html" class="active">Dashboard</a>
+        <a href="/frontend/add_donor.html">Add Donor</a>
+        <a href="/frontend/availability.html">Availability</a>
+        <a href="/frontend/ai_search.html">AI Search</a>
+        <a href="/frontend/transfer_report.html">Transfer & Reports</a>
+        <a href="/frontend/settings.html">Settings</a>
+      </nav>
+    </aside>
+    <section class="main">
+      <header class="main-header">
+        <div>Welcome, <span id="hospitalName">Demo Hospital</span></div>
+        <div class="header-actions">
+          <button id="themeToggleDash" class="btn small">Theme</button>
+          <button id="logoutBtn" class="btn outline small">Logout</button>
+        </div>
+      </header>
+
+      <section class="stats" id="statsRoot">
+        <div class="stat-card" id="totalDonorsCard">
+          <div class="stat-icon">
+            <span class="material-symbols-outlined">volunteer_activism</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="totalDonors">0</div>
+            <div class="stat-label">Total Donors</div>
+          </div>
+        </div>
+        <div class="stat-card" id="availableOrgansCard">
+          <div class="stat-icon">
+            <span class="material-symbols-outlined">monitor_heart</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="availableOrgans">0</div>
+            <div class="stat-label">Available Organs</div>
+          </div>
+        </div>
+        <div class="stat-card" id="completedTransfersCard">
+          <div class="stat-icon">
+            <span class="material-symbols-outlined">local_shipping</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="completedTransfers">0</div>
+            <div class="stat-label">Completed Transfers</div>
+          </div>
+        </div>
+        <div class="stat-card" id="expiringOrgansCard">
+          <div class="stat-icon">
+            <span class="material-symbols-outlined">timer</span>
+          </div>
+          <div class="stat-content">
+            <div class="stat-value" id="expiringOrgans">0</div>
+            <div class="stat-label">Expiring Soon</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="controls">
+        <button class="btn" onclick="go('/frontend/add_donor.html')">Add Donor</button>
+        <button class="btn outline" onclick="go('/frontend/ai_search.html')">Search Organ</button>
+        <button class="btn outline" onclick="go('/frontend/transfer_report.html')">Generate Report</button>
+      </section>
+
+      <section class="data-grid">
+        <div class="card">
+          <h3>Available Organs</h3>
+          <table id="availabilityTable">
+            <thead><tr><th>Organ</th><th>Blood</th><th>Expiry</th><th>Status</th><th>Hospital</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>AI Chat</h3>
+          <div id="aiWidget" class="ai-widget">
+            <div class="messages"><div class="bot">Hi, I'm Organ Oasis 🤖 How can I help?</div></div>
+            <div class="ai-actions">
+              <input id="aiInput" placeholder="Find kidney A+ near Chennai" />
+              <button onclick="aiQuery()" class="btn small">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="notifications card">
+        <h3>Notifications</h3>
+        <ul id="notificationsList"></ul>
+      </section>
+
+      <footer class="dashboard-footer">© 2025 Organ Oasis | Connecting Life with Hope</footer>
+    </section>
+  </div>
+
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

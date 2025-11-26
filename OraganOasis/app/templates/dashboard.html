@@ -1,0 +1,160 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OrganOasis Hospital Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#17cf91",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#11211c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#333333] dark:text-gray-200">
+<div class="relative flex min-h-screen w-full bg-gradient-to-b from-[#E0F7FA] to-[#E8F5E9] dark:from-gray-900 dark:to-gray-800">
+<aside class="fixed inset-y-0 left-0 z-20 flex w-16 -translate-x-full flex-col items-center bg-white/70 py-4 backdrop-blur-sm transition-transform duration-300 dark:bg-background-dark/70 sm:w-20 sm:translate-x-0 md:w-56 md:items-start md:px-4">
+<a class="mb-8 hidden items-center gap-2 px-2 md:flex" href="#">
+<span class="material-symbols-outlined text-3xl text-[#0277BD] dark:text-primary">local_florist</span>
+<span class="text-xl font-bold text-[#333333] dark:text-gray-100">OrganOasis</span>
+</a>
+<nav class="flex flex-col gap-4">
+<a class="flex flex-col items-center gap-1 text-[#0277BD] dark:text-primary md:flex-row md:gap-3 md:rounded-lg md:bg-[#E0F7FA]/80 md:p-2 md:dark:bg-blue-900/40" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-xs font-bold md:text-sm md:font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'donorform' %}">
+<span class="material-symbols-outlined">person_add</span>
+<span class="text-xs font-medium md:text-sm">Add Donor</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2" href="{% url 'availability' %}">
+<span class="material-symbols-outlined">event_available</span>
+<span class="text-xs font-medium md:text-sm">Availability</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'ai_search' %}">
+<span class="material-symbols-outlined">search</span>
+<span class="text-xs font-medium md:text-sm">AI Chat</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'transfer_out' %}">
+<span class="material-symbols-outlined">outbox</span>
+<span class="text-xs font-medium md:text-sm">Transfer Out</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'transfer_in' %}">
+<span class="material-symbols-outlined">move_to_inbox</span>
+<span class="text-xs font-medium md:text-sm">Transfer In</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'reports' %}">
+<span class="material-symbols-outlined">description</span>
+<span class="text-xs font-medium md:text-sm">Reports</span>
+</a>
+</nav>
+<a class="mt-auto flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 md:flex-row md:gap-3 md:p-2 hover:text-primary transition-colors" href="{% url 'settings' %}">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-xs font-medium md:text-sm">Settings</span>
+</a>
+</aside>
+<main class="w-full flex-1 sm:pl-20 md:pl-56">
+<header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-gray-200/80 bg-white/50 px-4 backdrop-blur-sm dark:border-gray-700/80 dark:bg-background-dark/50">
+<div class="flex items-center gap-2">
+<button class="text-[#333333] dark:text-gray-100 sm:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<a class="flex items-center gap-2 sm:hidden" href="#">
+<span class="material-symbols-outlined text-3xl text-[#0277BD] dark:text-primary">local_florist</span>
+<span class="text-xl font-bold text-[#333333] dark:text-gray-100">OrganOasis</span>
+</a>
+</div>
+<h2 class="hidden text-lg font-bold leading-tight tracking-[-0.015em] text-[#333333] dark:text-gray-100 sm:block">St. Jude's Hospital</h2>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-transparent text-[#333333] dark:text-gray-100">
+<span class="material-symbols-outlined text-2xl">account_circle</span>
+</button>
+</header>
+<div class="p-4">
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+<div class="flex flex-col gap-2 rounded-xl border border-gray-200/50 bg-white/70 p-4 shadow-sm dark:border-gray-700/50 dark:bg-background-dark/70">
+<p class="text-base font-medium leading-normal text-[#333333] dark:text-gray-300">Total Donors</p>
+<p class="text-3xl font-bold leading-tight tracking-tight text-[#0277BD] dark:text-primary">1,204</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl border border-gray-200/50 bg-white/70 p-4 shadow-sm dark:border-gray-700/50 dark:bg-background-dark/70">
+<p class="text-base font-medium leading-normal text-[#333333] dark:text-gray-300">Total Organs Available</p>
+<p class="text-3xl font-bold leading-tight tracking-tight text-[#0277BD] dark:text-primary">38</p>
+</div>
+<div class="flex flex-col gap-2 rounded-xl border border-gray-200/50 bg-white/70 p-4 shadow-sm dark:border-gray-700/50 dark:bg-background-dark/70">
+<p class="text-base font-medium leading-normal text-[#333333] dark:text-gray-300">Recent Transfers</p>
+<p class="text-3xl font-bold leading-tight tracking-tight text-[#0277BD] dark:text-primary">15</p>
+</div>
+</div>
+<div class="mt-6 rounded-xl border border-gray-200/50 bg-white/70 p-4 shadow-sm dark:border-gray-700/50 dark:bg-background-dark/70">
+<div class="mb-4 flex items-center justify-between">
+<h3 class="text-lg font-bold leading-tight tracking-[-0.015em] text-[#333333] dark:text-gray-100">Organ Availability by Type</h3>
+<select class="rounded-md border-gray-300 bg-white/80 py-1 text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200">
+<option>Last 30 Days</option>
+<option>Last 3 Months</option>
+<option>Last Year</option>
+</select>
+</div>
+<div class="flex h-64 w-full items-end justify-around space-x-2 rounded-lg bg-gray-50 p-4 dark:bg-gray-800/50">
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 60%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Kidney</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 45%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Liver</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 30%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Heart</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 75%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Lungs</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 20%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Pancreas</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-8 rounded-t-md bg-blue-300 dark:bg-blue-600" style="height: 85%"></div>
+<span class="mt-2 text-xs text-gray-500 dark:text-gray-400">Cornea</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

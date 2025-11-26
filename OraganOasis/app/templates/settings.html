@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#4CAF50",
+              "background-light": "#F7F8FC",
+              "background-dark": "#101922",
+              "text-light": "#333333",
+              "text-dark": "#F7F8FC",
+              "border-light": "#E0E0E0",
+              "border-dark": "#374151",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1F2937",
+              "destructive": "#D32F2F"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
+<!-- TopAppBar -->
+<div class="flex items-center bg-surface-light dark:bg-surface-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-border-light dark:border-border-dark">
+<button onclick="window.history.back()" class="text-text-light dark:text-text-dark flex size-10 shrink-0 items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h2 class="text-text-light dark:text-text-dark text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Settings</h2>
+</div>
+<div class="flex flex-col flex-1 px-4 py-4 space-y-6">
+<!-- Appearance Section -->
+<div>
+<h3 class="text-text-light dark:text-text-dark text-sm font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4 uppercase text-opacity-60">Appearance</h3>
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-lg">
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-background-light dark:bg-background-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">dark_mode</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Dark Mode</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-background-light dark:bg-background-dark p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary">
+<div class="h-full w-[27px] rounded-full bg-white transition-transform" style="box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 8px, rgba(0, 0, 0, 0.06) 0px 3px 1px;"></div>
+<input class="invisible absolute" type="checkbox" id="darkModeToggle" onchange="toggleDarkMode(this.checked)"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// Theme management
+function toggleDarkMode(isDark) {
+    if (isDark) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+}
+
+// Initialize theme on page load
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.checked = savedTheme === 'dark';
+    toggleDarkMode(darkModeToggle.checked);
+}
+
+// Apply theme immediately
+initializeTheme();
+</script>
+<!-- Account Section -->
+<div>
+<h3 class="text-text-light dark:text-text-dark text-sm font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4 uppercase text-opacity-60">Account</h3>
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-lg">
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between border-b border-border-light dark:border-border-dark">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-background-light dark:bg-background-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">local_hospital</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Edit Hospital Details</p>
+</div>
+<div class="shrink-0">
+<div class="text-text-light dark:text-text-dark flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Section -->
+<div>
+<h3 class="text-text-light dark:text-text-dark text-sm font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4 uppercase text-opacity-60">Security</h3>
+<div class="flex flex-col bg-surface-light dark:bg-surface-dark rounded-lg">
+<div class="flex items-center gap-4 px-4 min-h-14 justify-between">
+<div class="flex items-center gap-4">
+<div class="text-text-light dark:text-text-dark flex items-center justify-center rounded-lg bg-background-light dark:bg-background-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-2xl">lock_reset</span>
+</div>
+<p class="text-text-light dark:text-text-dark text-base font-normal leading-normal flex-1 truncate">Change Password</p>
+</div>
+<div class="shrink-0">
+<div class="text-text-light dark:text-text-dark flex size-7 items-center justify-center">
+<span class="material-symbols-outlined text-2xl">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- General Section / Logout Button -->
+<div class="mt-auto px-4 py-8">
+<button class="flex w-full items-center justify-center rounded-lg bg-destructive px-4 py-3 text-base font-bold text-white shadow-sm transition-colors hover:bg-opacity-90">
+          Logout
+        </button>
+</div>
+</div>
+</body></html>

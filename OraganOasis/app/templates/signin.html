@@ -1,0 +1,113 @@
+{% load static %}
+  <!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Staff Portal Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2D6A9E",
+            "background-light": "#F8F9FA",
+            "background-dark": "#101922",
+            "text-light": "#343A40",
+            "text-dark": "#F8F9FA",
+            "border-light": "#CED4DA",
+            "border-dark": "#3b4754",
+            "input-bg-light": "#FFFFFF",
+            "input-bg-dark": "#1c2127",
+            "placeholder-light": "#6c757d",
+            "placeholder-dark": "#9dabb9",
+            "secondary-link-light": "#495057",
+            "secondary-link-dark": "#CED4DA",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display">
+<div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-light p-4">
+<div class="w-full max-w-md space-y-8">
+<div class="text-center">
+<div class="mb-4 inline-flex items-center justify-center rounded-full bg-primary/20 p-4 text-primary">
+<span class="material-symbols-outlined !text-4xl">
+            health_and_safety
+          </span>
+</div>
+<h1 class="text-3xl font-bold tracking-tight text-text-light">Staff Portal Login</h1>
+<p class="mt-2 text-base text-secondary-link-light">Secure access for hospital personnel.</p>
+</div>
+<form method="POST" action="{% url 'login' %}" class="flex flex-col gap-6">
+{% csrf_token %}
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium pb-2 text-text-light">Email Address</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<div class="text-placeholder-light flex border border-border-light bg-input-bg-light items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">
+                mail
+              </span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light bg-input-bg-light h-14 placeholder:text-placeholder-light px-3 text-base font-normal leading-normal rounded-l-none border-l-0" placeholder="Enter your email" type="email" name="email" required/>
+</div>
+</label>
+<label class="flex flex-col flex-1">
+<p class="text-base font-medium pb-2 text-text-light">Password</p>
+<div class="flex w-full flex-1 items-stretch rounded-lg">
+<div class="text-placeholder-light flex border border-border-light bg-input-bg-light items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined">
+                lock
+              </span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-light focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-light bg-input-bg-light h-14 placeholder:text-placeholder-light px-3 text-base font-normal leading-normal rounded-r-none border-l-0" placeholder="Enter your password" type="password" name="password" required/>
+<button aria-label="Toggle password visibility" class="text-placeholder-light flex border border-border-light bg-input-bg-light items-center justify-center pr-4 rounded-r-lg border-l-0">
+<span class="material-symbols-outlined">
+                visibility
+              </span>
+</button>
+</div>
+</label>
+<div class="flex items-center justify-end">
+<a class="text-sm font-medium text-primary hover:underline" href="#">Forgot Password?</a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<button class="flex w-full items-center justify-center rounded-lg bg-primary h-14 text-white text-base font-bold leading-normal transition-opacity hover:opacity-90">
+          Login
+        </button>
+<p class="text-center text-sm text-secondary-link-light">
+          Don't have an account? <a class="font-medium text-primary hover:underline" href="{% url 'signup' %}">Create one</a>
+</p>
+</div>
+</div>
+</div>
+</body></html>

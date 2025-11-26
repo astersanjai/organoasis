@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis - Home</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <h1>Organ Oasis</h1>
+      <p class="tagline">Connecting Life with Hope — Smart Organ Donation & Transfer System</p>
+      <div class="hero-actions">
+        <a class="btn" href="/frontend/login.html">Hospital Login</a>
+        <a class="btn outline" href="/frontend/signup.html">Hospital Signup</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="container about">
+    <h2>About Organ Oasis</h2>
+    <p>Organ Oasis helps hospitals manage organ donations, availability, and transfers. Use the dashboard to add donors, search organs, and create transfer reports.</p>
+  </section>
+
+  <section class="container features">
+    <div class="card">
+      <h3>Manage Donors</h3>
+      <p>Add donors, track expiry, and notify receiving hospitals.</p>
+    </div>
+    <div class="card">
+      <h3>AI Assisted Search</h3>
+      <p>Find compatible organs quickly using our simulated AI search.</p>
+    </div>
+    <div class="card">
+      <h3>Transfers & Reports</h3>
+      <p>Generate transfer summaries and monitor transport details.</p>
+    </div>
+  </section>
+
+  <footer class="container footer-compact">
+    <div>Contact: support@organoasis.example • Phone: +1 555 123 4567</div>
+    <div>Theme: <button id="themeToggleFooter" class="btn small">Toggle</button></div>
+  </footer>
+
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

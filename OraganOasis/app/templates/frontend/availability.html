@@ -1,0 +1,598 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Organ Donation Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 24px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200/10 bg-background-light/80 p-4 pb-3 backdrop-blur-sm dark:bg-background-dark/80">
+<button onclick="goBack()" class="flex size-12 shrink-0 items-center justify-start text-gray-600 dark:text-gray-400">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-gray-900 dark:text-white">Available Organs</h1>
+<div class="flex items-center justify-end gap-2">
+<button id="themeToggle" class="flex h-8 items-center justify-center rounded-lg bg-gray-100 px-3 text-sm font-medium dark:bg-gray-800">
+  <span class="material-symbols-outlined text-gray-600 dark:text-gray-400">dark_mode</span>
+</button>
+<button onclick="location.href='/frontend/add_donor.html'" class="flex h-8 items-center justify-center rounded-lg bg-primary/20 px-3 text-sm font-medium text-primary">Add New</button>
+</div>
+</div>
+<div class="flex flex-col gap-4 p-4">
+<!-- Search Bar -->
+<div>
+<label class="flex w-full flex-col">
+<div class="flex h-12 w-full flex-1 items-stretch rounded-lg">
+<div class="flex items-center justify-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 pl-4 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg border border-l-0 border-gray-300 bg-gray-100 px-4 text-base font-normal leading-normal text-gray-900 placeholder:text-gray-500 focus:border-primary focus:outline-0 focus:ring-0 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400" placeholder="Search by Hospital, Patient ID..." value=""/>
+</div>
+</label>
+</div>
+<!-- Chips -->
+<div class="flex flex-col gap-4">
+  <!-- Districts -->
+  <div>
+    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Districts</p>
+    <div class="flex flex-wrap gap-2">
+      <button onclick="selectFilter('district', 'Chennai')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Chennai</p>
+      </button>
+      <button onclick="selectFilter('district', 'Coimbatore')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Coimbatore</p>
+      </button>
+      <button onclick="selectFilter('district', 'Salem')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Salem</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Organ Types -->
+  <div>
+    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Organ Types</p>
+    <div class="flex flex-wrap gap-2">
+      <button onclick="selectFilter('organType', 'Heart')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Heart</p>
+      </button>
+      <button onclick="selectFilter('organType', 'Kidney')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Kidney</p>
+      </button>
+      <button onclick="selectFilter('organType', 'Liver')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Liver</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Blood Groups -->
+  <div>
+    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Blood Groups</p>
+    <div class="flex flex-wrap gap-2">
+      <button onclick="selectFilter('bloodGroup', 'A+')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">A+</p>
+      </button>
+      <button onclick="selectFilter('bloodGroup', 'B+')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">B+</p>
+      </button>
+      <button onclick="selectFilter('bloodGroup', 'A-')" class="flex h-9 shrink-0 items-center justify-center rounded-lg border border-gray-300 bg-gray-100 px-3 dark:border-gray-700 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+        <p class="text-sm font-medium text-gray-700 dark:text-gray-300">A-</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- Clear Filters -->
+  <div class="flex justify-end">
+    <button onclick="clearFilters()" class="flex h-9 shrink-0 items-center justify-center gap-x-1.5 rounded-lg px-3 text-primary hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <span class="material-symbols-outlined text-base">filter_alt_off</span>
+      <p class="text-sm font-medium">Clear All Filters</p>
+    </button>
+  </div>
+</div>
+</div>
+<!-- Organ List -->
+<div class="flex flex-col gap-4 px-4 pb-24">
+<!-- Card 1 -->
+<div class="flex flex-col items-stretch justify-start rounded-xl border border-gray-200/10 bg-white shadow-sm dark:bg-gray-800/50">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-3 p-4">
+<div class="flex items-center justify-between">
+<p class="text-base font-semibold text-gray-900 dark:text-white">City General Hospital</p>
+<p class="text-sm font-normal text-gray-500 dark:text-gray-400">ID: P789-012</p>
+</div>
+<div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Organ</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Kidney</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Blood Group</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">O+</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Location</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Salem</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Contact</p>
+<div class="flex items-center gap-1 font-medium text-primary">
+<span class="material-symbols-outlined text-lg">call</span>
+<span>View</span>
+</div>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between gap-4 rounded-lg bg-green-100/50 p-3 dark:bg-green-900/20">
+<p class="text-sm font-semibold text-green-600 dark:text-green-400">Expires in 02:15:30</p>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm">
+<span class="truncate">Request Full Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col items-stretch justify-start rounded-xl border border-gray-200/10 bg-white shadow-sm dark:bg-gray-800/50">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-3 p-4">
+<div class="flex items-center justify-between">
+<p class="text-base font-semibold text-gray-900 dark:text-white">Metro Health Clinic</p>
+<p class="text-sm font-normal text-gray-500 dark:text-gray-400">ID: P456-789</p>
+</div>
+<div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Organ</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Liver</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Blood Group</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">A-</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Location</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Coimbatore</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Contact</p>
+<div class="flex items-center gap-1 font-medium text-primary">
+<span class="material-symbols-outlined text-lg">call</span>
+<span>View</span>
+</div>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between gap-4 rounded-lg bg-amber-100/50 p-3 dark:bg-amber-900/20">
+<p class="text-sm font-semibold text-amber-600 dark:text-amber-400">Expires in 01:45:10</p>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm">
+<span class="truncate">Request Full Report</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col items-stretch justify-start rounded-xl border border-gray-200/10 bg-white shadow-sm dark:bg-gray-800/50">
+<div class="flex w-full grow flex-col items-stretch justify-center gap-3 p-4">
+<div class="flex items-center justify-between">
+<p class="text-base font-semibold text-gray-900 dark:text-white">Oakridge Medical Center</p>
+<p class="text-sm font-normal text-gray-500 dark:text-gray-400">ID: P123-456</p>
+</div>
+<div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Organ</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Heart</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Blood Group</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">B+</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Location</p>
+<p class="font-medium text-gray-800 dark:text-gray-200">Chennai</p>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400">Contact</p>
+<div class="flex items-center gap-1 font-medium text-primary">
+<span class="material-symbols-outlined text-lg">call</span>
+<span>View</span>
+</div>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between gap-4 rounded-lg bg-red-100/50 p-3 dark:bg-red-900/20">
+<p class="text-sm font-semibold text-red-600 dark:text-red-400">Expires in 00:25:45</p>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm">
+<span class="truncate">Request Full Report</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-10 border-t border-gray-200/10 bg-background-light/80 backdrop-blur-sm dark:bg-background-dark/80">
+<div class="mx-auto grid h-16 max-w-md grid-cols-4 px-4">
+<a class="inline-flex flex-col items-center justify-center px-4 text-primary hover:bg-gray-50 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="text-xs font-medium">Dashboard</span>
+</a>
+<a class="inline-flex flex-col items-center justify-center px-4 text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mb-1">description</span>
+<span class="text-xs font-medium">Requests</span>
+</a>
+<a class="inline-flex flex-col items-center justify-center px-4 text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mb-1">notifications</span>
+<span class="text-xs font-medium">Alerts</span>
+</a>
+<a class="inline-flex flex-col items-center justify-center px-4 text-gray-500 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="text-xs font-medium">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+<script>
+  // Theme handling
+  const html = document.documentElement;
+  const themeToggle = document.getElementById('themeToggle');
+  
+  // Check for saved theme preference, otherwise default to light
+  const theme = localStorage.getItem('oo_theme') || 'light';
+  if (theme === 'dark') {
+    html.classList.add('dark');
+  }
+
+  // Handle theme toggle
+  themeToggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    const isDark = html.classList.contains('dark');
+    localStorage.setItem('oo_theme', isDark ? 'dark' : 'light');
+  });
+
+  // Get organ data from localStorage
+  function load() {
+    const raw = localStorage.getItem('organ_oasis_data_v1');
+    if (!raw) {
+      // Initialize with test data if empty
+      const testData = {
+        donors: [
+          {
+            hospital: "City General Hospital",
+            patient_id: "P789-012",
+            organ: "Kidney",
+            blood: "A+",
+            location: "Salem",
+            contact: "+91-9876543210",
+            email: "citygen@example.com",
+            expiry: new Date(Date.now() + 2*60*60*1000).toISOString() // 2 hours from now
+          },
+          {
+            hospital: "Metro Health Clinic",
+            patient_id: "P456-789",
+            organ: "Liver",
+            blood: "A-",
+            location: "Coimbatore",
+            contact: "+91-9876543211",
+            email: "metrohealth@example.com",
+            expiry: new Date(Date.now() + 1.5*60*60*1000).toISOString() // 1.5 hours from now
+          },
+          {
+            hospital: "Oakridge Medical Center",
+            patient_id: "P123-456",
+            organ: "Heart",
+            blood: "B+",
+            location: "Chennai",
+            contact: "+91-9876543212",
+            email: "oakridge@example.com",
+            expiry: new Date(Date.now() + 0.5*60*60*1000).toISOString() // 30 minutes from now
+          }
+        ]
+      };
+      localStorage.setItem('organ_oasis_data_v1', JSON.stringify(testData));
+      return testData;
+    }
+    return JSON.parse(raw);
+  }
+
+  // Robust back navigation: try history.back(), otherwise fall back to dashboard
+  function goBack() {
+    try {
+      // If there's a referrer from same origin or history length > 1, go back
+      const hasReferrer = document.referrer && new URL(document.referrer).origin === location.origin;
+      if (hasReferrer || window.history.length > 1) {
+        window.history.back();
+        // In case history.back() does nothing (some browsers), set a short timeout to redirect
+        setTimeout(() => {
+          if (document.visibilityState !== 'visible') return; // user navigated away
+          // If still on same page, redirect to dashboard as fallback
+          window.location.href = '/frontend/dashboard.html';
+        }, 300);
+        return;
+      }
+
+      // No useful history/referrer — redirect to dashboard
+      window.location.href = '/frontend/dashboard.html';
+    } catch (err) {
+      console.error('goBack error, redirecting to dashboard', err);
+      window.location.href = '/frontend/dashboard.html';
+    }
+  }
+
+  // Filter and search functionality
+  let filters = {
+    district: '',
+    organType: '',
+    bloodGroup: '',
+    searchTerm: ''
+  };
+
+  // Initialize dropdowns
+  const districts = [...new Set(load().donors.map(d => d.location))];
+  const organTypes = [...new Set(load().donors.map(d => d.organ))];
+  const bloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+
+  // Search functionality
+  const searchInput = document.querySelector('input[placeholder="Search by Hospital, Patient ID..."]');
+  searchInput.addEventListener('input', (e) => {
+    filters.searchTerm = e.target.value.toLowerCase();
+    renderOrgans();
+  });
+
+  // Dropdown click handlers
+  document.querySelectorAll('button').forEach(btn => {
+    if (btn.textContent.includes('District')) {
+      btn.onclick = () => showDropdown('district', districts);
+    } else if (btn.textContent.includes('Organ Type')) {
+      btn.onclick = () => showDropdown('organType', organTypes);
+    } else if (btn.textContent.includes('Blood Group')) {
+      btn.onclick = () => showDropdown('bloodGroup', bloodGroups);
+    } else if (btn.textContent.includes('Clear Filters')) {
+      btn.onclick = clearFilters;
+    }
+  });
+
+  function showDropdown(type, options) {
+    const dialog = document.createElement('div');
+    dialog.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50';
+    dialog.innerHTML = `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-4 w-80 max-w-[90vw]">
+        <h3 class="text-lg font-semibold mb-3">Select ${type.replace(/([A-Z])/g, ' $1').toLowerCase()}</h3>
+        <div class="flex flex-col gap-2 max-h-[60vh] overflow-auto">
+          ${options.map(opt => `
+            <button class="text-left px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" 
+              onclick="selectFilter('${type}', '${opt}')">${opt}</button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+    dialog.onclick = e => {
+      if (e.target === dialog) document.body.removeChild(dialog);
+    };
+  }
+
+  function selectFilter(type, value) {
+    // Toggle filter
+    filters[type] = filters[type] === value ? '' : value;
+    
+    // Update button styles
+    document.querySelectorAll('button').forEach(btn => {
+      const btnText = btn.querySelector('p')?.textContent;
+      if (btnText === value) {
+        if (filters[type] === value) {
+          btn.classList.add('bg-primary/10', 'border-primary');
+          btn.querySelector('p').classList.add('text-primary');
+        } else {
+          btn.classList.remove('bg-primary/10', 'border-primary');
+          btn.querySelector('p').classList.remove('text-primary');
+        }
+      }
+    });
+
+    console.log('Applied filters:', filters); // Debug log
+    renderOrgans();
+    
+    // Remove any open dialogs
+    const dialog = document.querySelector('.fixed.inset-0.z-50');
+    if (dialog) {
+      dialog.remove();
+    }
+  }
+
+  function clearFilters() {
+    filters = {
+      district: '',
+      organType: '',
+      bloodGroup: '',
+      searchTerm: ''
+    };
+    searchInput.value = '';
+    
+    // Reset all filter button styles
+    document.querySelectorAll('button').forEach(btn => {
+      btn.classList.remove('bg-primary/10', 'border-primary');
+      btn.querySelector('p')?.classList.remove('text-primary');
+    });
+
+    renderOrgans();
+  }
+
+  // Render organ cards
+  function renderOrgans() {
+    console.log('Rendering organs with filters:', filters); // Debug log
+    const organList = document.querySelector('.flex.flex-col.gap-4.px-4.pb-24');
+    const allDonors = load().donors;
+    console.log('Available donors:', allDonors); // Debug log
+    
+    const donors = allDonors.filter(donor => {
+      const matchesSearch = !filters.searchTerm || 
+        donor.hospital.toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
+        donor.patient_id.toLowerCase().includes(filters.searchTerm.toLowerCase());
+      const matchesDistrict = !filters.district || donor.location === filters.district;
+      const matchesOrgan = !filters.organType || donor.organ === filters.organType;
+      const matchesBlood = !filters.bloodGroup || donor.blood === filters.bloodGroup;
+      
+      const matches = matchesSearch && matchesDistrict && matchesOrgan && matchesBlood;
+      console.log(`Donor ${donor.patient_id}: matches=${matches}, district=${matchesDistrict}, organ=${matchesOrgan}, blood=${matchesBlood}`); // Debug log
+      return matches;
+    });
+
+    organList.innerHTML = donors.map(donor => {
+      const expiryDate = new Date(donor.expiry);
+      const now = new Date();
+      const timeLeft = expiryDate - now;
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      let statusClass = 'bg-green-100/50 dark:bg-green-900/20';
+      let statusTextClass = 'text-green-600 dark:text-green-400';
+      
+      if (hours < 1) {
+        statusClass = 'bg-red-100/50 dark:bg-red-900/20';
+        statusTextClass = 'text-red-600 dark:text-red-400';
+      } else if (hours < 2) {
+        statusClass = 'bg-amber-100/50 dark:bg-amber-900/20';
+        statusTextClass = 'text-amber-600 dark:text-amber-400';
+      }
+
+      return `
+        <div class="flex flex-col items-stretch justify-start rounded-xl border border-gray-200/10 bg-white shadow-sm dark:bg-gray-800/50">
+          <div class="flex w-full grow flex-col items-stretch justify-center gap-3 p-4">
+            <div class="flex items-center justify-between">
+              <p class="text-base font-semibold text-gray-900 dark:text-white">${donor.hospital}</p>
+              <p class="text-sm font-normal text-gray-500 dark:text-gray-400">ID: ${donor.patient_id}</p>
+            </div>
+            <div class="h-px w-full bg-gray-200 dark:bg-gray-700"></div>
+            <div class="grid grid-cols-2 gap-x-4 gap-y-3">
+              <div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Organ</p>
+                <p class="font-medium text-gray-800 dark:text-gray-200">${donor.organ}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Blood Group</p>
+                <p class="font-medium text-gray-800 dark:text-gray-200">${donor.blood}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Location</p>
+                <p class="font-medium text-gray-800 dark:text-gray-200">${donor.location}</p>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Contact</p>
+                <div class="flex items-center gap-1 font-medium text-primary" 
+                  onclick="showContact('${donor.contact}', '${donor.email}')">
+                  <span class="material-symbols-outlined text-lg">call</span>
+                  <span>View</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4 rounded-lg ${statusClass} p-3">
+              <p class="text-sm font-semibold ${statusTextClass}">
+                ${timeLeft > 0 ? `Expires in ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}` : 'Expired'}
+              </p>
+              <button onclick="requestReport('${donor.patient_id}')" 
+                class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm">
+                <span class="truncate">Request Full Report</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('') || '<p class="text-center text-gray-500 dark:text-gray-400 py-8">No organs match your filters</p>';
+  }
+
+  // Contact and report functions
+  function showContact(contact, email) {
+    const dialog = document.createElement('div');
+    dialog.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50';
+    dialog.innerHTML = `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-4 w-80 max-w-[90vw]">
+        <h3 class="text-lg font-semibold mb-3">Contact Information</h3>
+        <p class="mb-2"><strong>Phone:</strong> ${contact}</p>
+        <p class="mb-4"><strong>Email:</strong> ${email}</p>
+        <div class="flex gap-2">
+          <a href="tel:${contact}" class="flex-1 bg-primary text-white py-2 rounded-lg text-center">Call</a>
+          <a href="mailto:${email}" class="flex-1 bg-primary text-white py-2 rounded-lg text-center">Email</a>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+    dialog.onclick = e => {
+      if (e.target === dialog) document.body.removeChild(dialog);
+    };
+  }
+
+  function requestReport(patientId) {
+    const dialog = document.createElement('div');
+    dialog.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50';
+    dialog.innerHTML = `
+      <div class="bg-white dark:bg-gray-800 rounded-xl p-4 w-96 max-w-[90vw]">
+        <h3 class="text-lg font-semibold mb-3">Request Full Report</h3>
+        <p class="mb-4">Requesting full medical report for patient ${patientId}. The donor hospital will be notified and will send the report to your registered email.</p>
+        <div class="flex justify-end gap-2">
+          <button onclick="this.closest('.fixed').remove()" 
+            class="px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700">Cancel</button>
+          <button onclick="confirmReport('${patientId}')" 
+            class="px-4 py-2 rounded-lg bg-primary text-white">Confirm Request</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+    dialog.onclick = e => {
+      if (e.target === dialog) document.body.removeChild(dialog);
+    };
+  }
+
+  function confirmReport(patientId) {
+    // Here we would typically make an API call to request the report
+    alert(`Report request sent for patient ${patientId}. You will receive it by email shortly.`);
+    document.querySelector('.fixed.inset-0').remove();
+  }
+
+  // Initialize bottom navigation
+  document.querySelectorAll('nav a').forEach(link => {
+    if (link.querySelector('span:last-child').textContent === 'Dashboard') {
+      link.href = '/frontend/dashboard.html';
+    } else if (link.querySelector('span:last-child').textContent === 'Profile') {
+      link.href = '/frontend/settings.html';
+    }
+  });
+
+  // Update expiry timers every second
+  setInterval(renderOrgans, 1000);
+
+  // Initial render
+  renderOrgans();
+</script>
+</body></html>

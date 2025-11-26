@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hospital Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between">
+<button aria-label="Back" class="text-zinc-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-zinc-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Create Account</h2>
+</div>
+<main class="flex-1 px-4 py-6">
+<div class="text-center">
+<h1 class="text-zinc-900 dark:text-white text-3xl font-bold leading-tight tracking-tight">Hospital Registration</h1>
+<p class="text-zinc-600 dark:text-zinc-400 text-base font-normal leading-normal pt-2">Join our network to help save lives.</p>
+</div>
+<form class="mt-8 space-y-4" method="POST" action="{% url 'signup' %}">
+{% csrf_token %}
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="hospital-name">Hospital Name</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] text-base font-normal leading-normal" id="hospital-name" name="hospital_name" placeholder="Enter hospital name" type="text" required/>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2 flex items-center gap-1.5" for="reg-id">
+                        Registration ID / License Number
+                        <span class="material-symbols-outlined text-zinc-500 dark:text-zinc-400 text-base">info</span>
+</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] text-base font-normal leading-normal" id="reg-id" placeholder="Enter official ID or license number" type="text"/>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="email">Email Address</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] text-base font-normal leading-normal" id="email" placeholder="you@example.com" type="email"/>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="contact-number">Contact Number</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] pl-20 text-base font-normal leading-normal" id="contact-number" placeholder="987 654 3210" type="tel"/>
+<div class="absolute inset-y-0 left-0 flex items-center pl-3">
+<select class="form-select bg-transparent dark:bg-zinc-800 border-0 text-zinc-900 dark:text-white focus:ring-0">
+<option>+91</option>
+<option>+1</option>
+<option>+44</option>
+</select>
+</div>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="location">District / Location</label>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] text-base font-normal leading-normal" id="location" placeholder="e.g., Mumbai, Maharashtra" type="text"/>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="password">Password</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] pr-12 text-base font-normal leading-normal" id="password" placeholder="Enter a secure password" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 flex items-center justify-center px-4 text-zinc-500 dark:text-zinc-400" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col">
+<label class="text-zinc-900 dark:text-white text-base font-medium leading-normal pb-2" for="confirm-password">Confirm Password</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-zinc-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:border-primary h-14 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 p-[15px] pr-12 text-base font-normal leading-normal" id="confirm-password" placeholder="Re-enter your password" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute inset-y-0 right-0 flex items-center justify-center px-4 text-zinc-500 dark:text-zinc-400" type="button">
+<span class="material-symbols-outlined">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex items-start py-2">
+<input class="form-checkbox mt-1 h-5 w-5 rounded border-zinc-300 text-primary focus:ring-primary/50" id="terms-checkbox" type="checkbox"/>
+<label class="ml-3 block text-sm text-zinc-600 dark:text-zinc-400" for="terms-checkbox">
+                        I agree to the <a class="font-medium text-primary hover:underline" href="#">Terms of Service</a> and <a class="font-medium text-primary hover:underline" href="#">Privacy Policy</a>.
+                    </label>
+</div>
+<div class="pt-4 pb-2">
+<button class="flex h-14 w-full items-center justify-center gap-x-2 rounded-xl bg-primary px-6 py-2.5 text-base font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-blue-600 active:bg-blue-700" type="submit">Register</button>
+</div>
+</form>
+<div class="mt-6 text-center">
+<p class="text-zinc-600 dark:text-zinc-400">
+                    Already have an account? 
+                    <a class="font-semibold text-primary hover:underline" href="#">Log In</a>
+</p>
+</div>
+</main>
+</div>
+</body></html>

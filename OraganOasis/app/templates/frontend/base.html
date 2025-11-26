@@ -1,0 +1,38 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Organ Oasis</title>
+  <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="{% static '' %}../frontend/home.html">Organ Oasis</a>
+      <nav class="main-nav">
+        <a href="/frontend/home.html">Home</a>
+        <a href="/frontend/login.html">Login</a>
+        <a href="/frontend/signup.html">Signup</a>
+      </nav>
+      <div class="header-actions">
+        <button id="themeToggle" class="btn small">Toggle Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="page-root">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>© 2025 Organ Oasis | Connecting Life with Hope</div>
+      <div>Contact: support@organoasis.example</div>
+    </div>
+  </footer>
+
+  <script src="{% static 'frontend/js/app.js' %}"></script>
+</body>
+</html>

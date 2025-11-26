@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Organ Oasis AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#3CB371", // Green for positive accents as requested
+              "background-light": "#F8F9FA",
+              "background-dark": "#181a1b",
+              "text-light": "#343A40",
+              "text-dark": "#E8E6E3",
+              "card-light": "#FFFFFF",
+              "card-dark": "#242628",
+              "interactive": "#48D1CC", // Teal for buttons and interactive elements
+              "urgent": "#FFA500", // Amber for expiry timer
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="relative flex min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-10 flex w-full items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-3 backdrop-blur-sm">
+<h1 class="text-text-light dark:text-text-dark text-xl font-bold leading-tight tracking-tight flex-1 text-center">💚 Organ Oasis AI</h1>
+</header>
+<main class="flex flex-col flex-1 px-4 py-4">
+<!-- Search Results (or Empty State) -->
+<div class="flex flex-col gap-6 flex-1">
+<!-- This section shows after a search. Initially it would be hidden or replaced by the empty state. -->
+<div class="flex flex-col gap-4">
+<p class="text-text-light/80 dark:text-text-dark/80 text-sm px-2">Found 3 matching results for you.</p>
+<!-- Card 1 -->
+<div class="flex flex-col gap-4 rounded-lg bg-card-light dark:bg-card-dark p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-lg font-bold leading-tight text-text-light dark:text-text-dark">Liver (A+)</p>
+<p class="text-sm font-normal leading-normal text-text-light/70 dark:text-text-dark/70">Apollo Hospital, Chennai</p>
+</div>
+<div class="flex items-center justify-center size-12 shrink-0 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined !text-3xl">fluid_med</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<p class="text-xs text-urgent font-medium">Expires in</p>
+<p class="text-base font-bold text-urgent">12h 30m</p>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-5 bg-interactive text-white text-sm font-bold leading-normal tracking-wide">
+<span class="truncate">View Details</span>
+</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col gap-4 rounded-lg bg-card-light dark:bg-card-dark p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-lg font-bold leading-tight text-text-light dark:text-text-dark">Kidney (O-)</p>
+<p class="text-sm font-normal leading-normal text-text-light/70 dark:text-text-dark/70">Fortis Hospital, Mumbai</p>
+</div>
+<div class="flex items-center justify-center size-12 shrink-0 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined !text-3xl">blood_pressure</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<p class="text-xs text-urgent font-medium">Expires in</p>
+<p class="text-base font-bold text-urgent">8h 15m</p>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-5 bg-interactive text-white text-sm font-bold leading-normal tracking-wide">
+<span class="truncate">View Details</span>
+</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col gap-4 rounded-lg bg-card-light dark:bg-card-dark p-4 shadow-[0_4px_12px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+<div class="flex items-start justify-between gap-4">
+<div class="flex flex-col gap-1">
+<p class="text-lg font-bold leading-tight text-text-light dark:text-text-dark">Heart (B+)</p>
+<p class="text-sm font-normal leading-normal text-text-light/70 dark:text-text-dark/70">Manipal Hospital, Bangalore</p>
+</div>
+<div class="flex items-center justify-center size-12 shrink-0 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined !text-3xl">cardiology</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col">
+<p class="text-xs text-urgent font-medium">Expires in</p>
+<p class="text-base font-bold text-urgent">4h 45m</p>
+</div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-5 bg-interactive text-white text-sm font-bold leading-normal tracking-wide">
+<span class="truncate">View Details</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Chat Input Field -->
+<footer class="sticky bottom-0 z-10 w-full bg-background-light dark:bg-background-dark pt-2 p-4">
+<div class="relative flex w-full items-center">
+<input class="w-full rounded-full border border-text-light/20 dark:border-text-dark/20 bg-card-light dark:bg-card-dark h-14 pl-5 pr-14 text-base text-text-light dark:text-text-dark placeholder:text-text-light/50 dark:placeholder:text-text-dark/50 focus:border-interactive focus:ring-2 focus:ring-interactive/50" placeholder="Ask me — e.g., Find a liver A+ near Chennai" type="text"/>
+<button class="absolute right-2 flex size-10 items-center justify-center rounded-full bg-interactive text-white">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</footer>
+</div>
+</body></html>

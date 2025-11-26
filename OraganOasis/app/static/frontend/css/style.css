@@ -1,0 +1,72 @@
+:root{
+  --bg:#ffffff;--fg:#0b3d2e;--muted:#6b7280;--accent:#17cf91;--card:#f8faf8;
+}
+[data-theme="dark"]{--bg:#071411;--fg:#dbeee2;--muted:#9ca9a1;--accent:#17cf91;--card:#0f1a17}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Arial; background:var(--bg); color:var(--fg); margin:0}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.site-header,.hero{background:linear-gradient(90deg,var(--card),#fff);padding:18px 0}
+.site-header .container{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;color:var(--accent);text-decoration:none}
+.main-nav a{margin:0 8px;color:var(--fg);text-decoration:none}
+.btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;border:none;cursor:pointer}
+.btn.outline{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.small{padding:6px 8px;font-size:13px}
+.hero{display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px}
+.hero h1{font-size:36px;margin:0}
+.tagline{color:var(--muted);margin-top:8px}
+.hero-actions{margin-top:14px}
+.about{margin-top:20px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}
+.card{background:var(--card);padding:16px;border-radius:12px}
+.auth-card{max-width:520px;margin:40px auto;padding:20px;background:var(--card);border-radius:12px}
+.form label{display:block;margin-bottom:6px;font-weight:500}
+.form input, .form select, .form textarea{
+  width:100%;padding:10px;border-radius:8px;
+  border:1px solid var(--muted);background:var(--bg);color:var(--fg);
+  transition:border-color 0.2s;
+}
+.form input:focus, .form select:focus, .form textarea:focus{
+  border-color:var(--accent);outline:none;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{margin-bottom:16px}
+.help-text{font-size:12px;color:var(--muted);margin-top:4px}
+.form-actions{display:flex;gap:10px;align-items:center;margin-top:24px}
+.small-form{max-width:800px;margin:30px auto}
+.message-box{
+  margin-top:16px;padding:12px;border-radius:8px;display:none;
+  background:var(--card);border:1px solid var(--muted);
+}
+.message-box.success{
+  display:block;background:#dcfce7;color:#166534;border-color:#22c55e;
+}
+.message-box.error{
+  display:block;background:#fee2e2;color:#991b1b;border-color:#ef4444;
+}
+.dashboard{display:flex;gap:20px}
+.sidebar{width:220px;background:var(--card);padding:12px;border-radius:12px;height:calc(100vh - 40px);position:sticky;top:20px}
+.sidebar .brand{font-size:18px;margin-bottom:8px}
+.sidebar nav a{display:block;padding:8px;border-radius:8px;color:var(--muted);text-decoration:none;margin:6px 0}
+.sidebar nav a.active, .sidebar nav a:hover{background:rgba(23,207,145,0.08);color:var(--fg)}
+.main{flex:1}
+.main-header{display:flex;justify-content:space-between;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.stat-card{background:var(--card);padding:16px;border-radius:12px;display:flex;align-items:center;gap:12px;transition:transform 0.2s,box-shadow 0.2s}
+.stat-card:hover{transform:translateY(-2px);box-shadow:0 4px 6px rgba(0,0,0,0.1)}
+.stat-icon{width:48px;height:48px;border-radius:12px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center}
+.stat-icon .material-symbols-outlined{font-size:28px}
+.stat-content{flex:1}
+.stat-value{font-size:24px;font-weight:700;color:var(--fg)}
+.stat-label{font-size:14px;color:var(--muted)}
+.controls{display:flex;gap:8px;margin-bottom:12px}
+.data-grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+.ai-widget{display:flex;flex-direction:column;height:300px}
+.ai-widget .messages{flex:1;overflow:auto;padding:8px}
+.notifications{margin-top:12px}
+.full-table, #availabilityTable{width:100%;border-collapse:collapse}
+.full-table th, .full-table td, #availabilityTable th, #availabilityTable td{padding:8px;border-bottom:1px solid #eee}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.footer-compact{display:flex;justify-content:space-between;gap:12px;margin:20px 0}
+.muted{color:var(--muted);margin-top:8px}
+@media(max-width:900px){.dashboard{flex-direction:column}.data-grid{grid-template-columns:1fr}.sidebar{width:100%;height:auto;position:relative}}

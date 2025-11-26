@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.Python
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+/media
+staticfiles/
+
+# VSCode
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+
+# Byte-compiled / optimized / DLL files
+*.so
+
+# Environments
+.env
+
+# macOS
+*.DS_Store
+
+# Windows
+Thumbs.db
+
+# coverage
+htmlcov/
+.coverage
+
+# node (if any)
+node_modules/
+
+# Ignore credentials
+secrets.json
+.env.local
